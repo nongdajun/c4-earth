@@ -1,0 +1,66 @@
+{
+    "name": "c4earth",
+    "displayName": "C4ISR earth js launcher",
+    "description": "C4ISR earth js launcher extension",
+    "version": "0.0.1",
+    "publisher": "NDJ",
+    "engines": {
+        "vscode": "^1.0.0"
+    },
+    "categories": [
+        "Other",
+        "Debuggers"
+    ],
+    "activationEvents": [
+        "onCommand:extension.init",
+        "onCommand:extension.new",
+        "onCommand:extension.connect",
+        "onCommand:extension.disconnect",
+        "onCommand:extension.call",
+        "onCommand:extension.run",
+        "onCommand:extension.test",
+        "onCommand:extension.findserver"
+    ],
+    "main": "./extension",
+    "contributes": {
+        "commands": [
+            {
+            "command": "extension.init",
+            "title": "earth init: 初始化工作空间"
+            },
+            {
+            "command": "extension.new",
+            "title": "earth new: 创建新的脚本文件"
+            },
+            {
+            "command": "extension.connect",
+            "title": "earth connect: 按照配置值进行连接服务器"
+            },
+            {
+            "command": "extension.disconnect",
+            "title": "earth disconnect: 断开与服务器连接"
+            },
+            {
+            "command": "extension.call",
+            "title": "earth call: 发送当前编辑窗口内容"
+            },
+            {
+            "command": "extension.run",
+            "title": "earth run: 保存并运行当前编辑的脚本"
+            },
+            {
+            "command": "extension.test",
+            "title": "earth test: 测试"
+            },
+            {
+            "command": "extension.findserver",
+            "title": "earth findserver: 搜索网络上的C4ISR服务器"
+            }]
+    },
+    "scripts": {
+        "postinstall": "node ./node_modules/vscode/bin/install"
+    },
+    "devDependencies": {
+        "vscode": "^0.11.0"
+    }
+}
