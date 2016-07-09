@@ -81,17 +81,22 @@ function extension_fun_init(){
     var dev_dir = vscode.workspace.rootPath+"/c4earth_dev";
     var vsc_dir = vscode.workspace.rootPath + "/.vscode"
 
-    if(!fs.exists(dev_dir))
+    if(!fs.existsSync(dev_dir))
     {
-        fs.mkdir(dev_dir);
+        fs.mkdirSync(dev_dir);
     }
 
     if(!fs.exists(dev_dir+"/C4EARTH.d.ts")){
-        fs.writeFile(dev_dir+"/C4EARTH.d.ts", '////// <reference path="'+_context.asAbsolutePath("typings/C4EARTH.d.ts")+'" />');
+        fs.writeFileSync(dev_dir+"/C4EARTH.d.ts", '////// <reference path="'+_context.asAbsolutePath("data/C4EARTH.d.ts")+'" />');
+    }
+
+    if(!fs.existsSync(vsc_dir))
+    {
+        fs.mkdirSync(vsc_dir);
     }
 
     if(!fs.exists(vsc_dir+"/settings.json")){
-        fs.writeFile(vsc_dir+"/settings.json", '');
+        fs.writeFileSync(vsc_dir+"/settings.json", fs.readFileSync(_context.asAbsolutePath("data/settings.json")));
     }
 }
 
