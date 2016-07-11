@@ -20,22 +20,22 @@ function activate(context) {
     // The commandId parameter must match the command field in package.json
     var disposable;
 
-    disposable = vscode.commands.registerCommand('extension.init', workspace_helper.initWorkspace);
+    disposable = vscode.commands.registerCommand('extension.c4earth_init', workspace_helper.initWorkspace);
     context.subscriptions.push(disposable);
 
-    disposable = vscode.commands.registerCommand('extension.initForce', workspace_helper.initWorkspaceForce);
+    disposable = vscode.commands.registerCommand('extension.c4earth_initForce', workspace_helper.initWorkspaceForce);
     context.subscriptions.push(disposable);
 
-    disposable = vscode.commands.registerCommand('extension.new', workspace_helper.newFile);
+    disposable = vscode.commands.registerCommand('extension.c4earth_new', workspace_helper.newFile);
     context.subscriptions.push(disposable);
     
-    disposable = vscode.commands.registerTextEditorCommand('extension.call', socket_debugger.call);
+    disposable = vscode.commands.registerTextEditorCommand('extension.c4earth_call', socket_debugger.call);
     context.subscriptions.push(disposable);
 
-    disposable = vscode.commands.registerTextEditorCommand('extension.run', socket_debugger.run);
+    disposable = vscode.commands.registerTextEditorCommand('extension.c4earth_run', socket_debugger.run);
     context.subscriptions.push(disposable);
 
-    disposable = vscode.commands.registerCommand('extension.findserver', socket_debugger.findserver);
+    disposable = vscode.commands.registerCommand('extension.c4earth_findserver', socket_debugger.findserver);
     context.subscriptions.push(disposable);
 }
 exports.activate = activate;

@@ -1,8 +1,8 @@
 {
-    "name": "c4isr-earth-js",
-    "displayName": "C4ISR Earth JS",
-    "description": "C4ISR Earth Javascript IDE extension",
-    "version": "0.0.2",
+    "name": "c4earthjs",
+    "displayName": "C4Earth JS",
+    "description": "C4Earth Javascript 场景脚本集成开发环境",
+    "version": "0.0.3",
     "publisher": "NDJ",
     "engines": {
         "vscode": "^1.3.0"
@@ -13,73 +13,124 @@
         "Productivity"
     ],
     "activationEvents": [
-        "onCommand:extension.init",
-        "onCommand:extension.initForce",
-        "onCommand:extension.new",
-        "onCommand:extension.call",
-        "onCommand:extension.run",
-        "onCommand:extension.findserver",
-        "workspaceContains:.earth_dev.json"
+        "onCommand:extension.c4earth_init",
+        "onCommand:extension.c4earth_initForce",
+        "onCommand:extension.c4earth_new",
+        "onCommand:extension.c4earth_call",
+        "onCommand:extension.c4earth_run",
+        "onCommand:extension.c4earth_findserver",
+        "workspaceContains:.earth_dev.json",
+        "onDebug:c4earthjs-debug"
     ],
     "main": "./extension",
     "contributes": {
         "commands": [
             {
-            "command": "extension.init",
-            "title": "earth: init 初始化工作空间"
+            "command": "extension.c4earth_init",
+            "title": "C4Earth:初始化工作空间"
             },
             {
-            "command": "extension.initForce",
-            "title": "earth: init force 初始化工作空间并强制覆盖当前配置的内容"
+            "command": "extension.c4earth_initForce",
+            "title": "C4Earth:初始化工作空间并覆盖当前配置的内容"
             },
             {
-            "command": "extension.new",
-            "title": "earth: new 按照模板创建新的脚本文件"
+            "command": "extension.c4earth_new",
+            "title": "C4Earth:创建新的脚本文件"
             },
             {
-            "command": "extension.call",
-            "title": "earth: call 以指令形式发送当前编辑窗口内容"
+            "command": "extension.c4earth_call",
+            "title": "C4Earth:指令形式发送当前编辑窗口内容"
             },
             {
-            "command": "extension.run",
-            "title": "earth: run 保存并运行当前编辑的脚本"
+            "command": "extension.c4earth_run",
+            "title": "C4Earth:保存并运行当前编辑窗口的脚本"
             },
             {
-            "command": "extension.findserver",
-            "title": "earth: findserver 搜索同一网络上的C4ISR EARTH服务器"
+            "command": "extension.c4earth_findserver",
+            "title": "C4Earth:搜索本地网络上的C4EARTH服务器"
             }],
         "configuration": {
             "type": "object",
-            "title": "C4ISR Earth JS IDE configuration",
+            "title": "C4Earth JS 扩展参数配置",
             "properties": {
                 "c4earth.serverHost": {
                     "type": ["string", "null"],
                     "default": null,
-                    "description": "Specifies the host name for connect to C4ISR earth server."
+                    "description": "指定要连接的C4Earth服务器主机名称"
                 },
                 "c4earth.serverPort": {
                     "type": "integer",
                     "default": 50372,
-                    "description": "Specifies the port number for connect to C4ISR earth server."
+                    "description": "指定要连接的C4Earth服务器端口号"
                 },
                 "c4earth.serverPassword": {
                     "type": ["string", "null"],
                     "default": null,
-                    "description": "Specifies the password for login C4ISR earth server."
+                    "description": "指定要连接的C4Earth服务器的终端登录密码,密码明文的一重md5值"
                 }
             }
         },
         "menus": {
             "editor/title": [{
-                "when": "1==1",
-                "command": "extension.init",
-                "alt": "extension.initForce",
+                "when": "",
+                "command": "extension.c4earth_init",
+                "alt": "extension.c4earth_initForce",
+                "group": "navigation"
+            }],
+            "explorer/context": [{
+                "when": "",
+                "command": "extension.c4earth_run",
                 "group": "navigation"
             }]
-        }
+        },
+        "debuggers": [{
+            "type": "c4earthjs-debug",
+            "label": "C4Earth JS Debug",
+            "program": "./out/IDE/c4earthjs-debug.js",
+            "runtime": "node",
+            "enableBreakpointsFor": { "languageIds": ["javascript"] },
+            "initialConfigurations": [{
+                "name": "运行脚本",
+                "request": "launch",
+                "type": "c4earthjs-debug",
+                "action": "run"
+            },
+            {
+                "name": "调用命令",
+                "request": "launch",
+                "type": "c4earthjs-debug",
+                "action": "call"
+            }],
+            "configurationAttributes": {
+                "launch": {
+                    "required": ["name","type"],
+                    "properties": {
+                        "action": {
+                            "type": "string",
+                            "description": "执行模式, 可选值：'run' 或 'call'",
+                            "default": "run"
+                        }
+                    }
+                }
+            }
+        }],
+        "keybindings": [{
+            "command": "extension.c4earth_run",
+            "key": "f5",
+            "mac": "f5",
+            "when": ""
+        },
+        {
+            "command": "extension.c4earth_call",
+            "key": "ctrl+f5",
+            "mac": "cmd+f5",
+            "when": ""
+        }]
     },
     "scripts": {
-        "postinstall": "node ./node_modules/vscode/bin/install"
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "vscode:prepublish": "node ./node_modules/vscode/bin/compile",
+        "compile": "node ./node_modules/vscode/bin/compile -watch -p ./"
     },
     "preview":true,
     "icon":"icon.png",

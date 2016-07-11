@@ -1,4 +1,4 @@
-# Welcome to your first VS Code Extension
+# Welcome to C4Earth JS VS Code Extension
 
 ## What's in the folder
 * This folder contains all of the files necessary for your extension

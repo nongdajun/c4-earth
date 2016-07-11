@@ -2,8 +2,35 @@
     // See https://go.microsoft.com/fwlink/?LinkId=733558
     // for the documentation about the tasks.json format
     "version": "0.1.0",
-    "command": "vsce",
-    "isShellCommand": true,
-    "args": ["package"],
-    "showOutput": "always"
+    "windows": {
+        "command": "cmd",
+        "args": ["/u","/c"]
+    },
+    "linux": {
+        "command": "sh",
+        "args": []
+    },
+    "osx": {
+        "command": "sh",
+        "args": []
+    },
+    "isShellCommand": false,
+    "suppressTaskName":true,
+    "tasks": [
+        {
+            "taskName": "build",
+            "args": ["npm","run","compile","--loglevel", "silent"],
+            "isBuildCommand": true,
+            "isWatching": false,
+            "showOutput": "silent",
+            "problemMatcher": "$tsc-watch"
+        },
+        {
+            "taskName": "package",
+            "args": ["vsce","package"],
+            "isBuildCommand": false,
+            "isWatching": false,
+            "showOutput": "always"
+        }
+    ]
 }

@@ -1,6 +1,6 @@
-# c4-earth README
+# c4earthjs README
 
-This is the README for your extension "c4-earth". After writing up a brief description, we recommend including the following sections.
+This is the README for your extension "c4earthjs". After writing up a brief description, we recommend including the following sections.
 
 ## Features
 
