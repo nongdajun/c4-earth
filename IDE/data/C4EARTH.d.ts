@@ -192,7 +192,7 @@ declare namespace earth{
         function setViewpoint(vp:viewpoint, duration?:number):void;
         function setViewpoint(x:number, y:number, z:number, duration?:number):void;	
         function setViewpoint(x:number, y:number, z:number, h:number, p:number, r:number, duration?:number):void;	
-        function setViewpoint(handle:marker, duration?:number):void;
+        function setViewpointByMarker(handle:marker, duration?:number):void;
 		function getViewpoint():viewpoint;
 
         function tetherMarker(handle:marker, duration?:number):void;

@@ -48,7 +48,7 @@ function initWorkspaceFun(force){
 }
 
 exports.setContext = function(context){
-    _context = context;
+    _context = context; 
 }
 
 exports.initWorkspace = function(){

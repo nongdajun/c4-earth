@@ -1,4 +1,4 @@
-# c4earthjs README
+# C4Earth JS or Visual Studio Code
 
 This is the README for your extension "c4earthjs". After writing up a brief description, we recommend including the following sections.
 

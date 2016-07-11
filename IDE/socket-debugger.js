@@ -177,7 +177,7 @@ function connectServer_2(host, port, password){
                 vscode.window.showInformationMessage("验证登录成功!"); 
                 if(_connected_do=="call"){
                     exports.call();
-                }
+                } 
                 else if(_connected_do=="run"){
                     exports.run();
                 }
