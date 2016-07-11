@@ -19,6 +19,8 @@
         "onCommand:extension.c4earth_call",
         "onCommand:extension.c4earth_run",
         "onCommand:extension.c4earth_findserver",
+        "onCommand:extension.c4earth_abort",
+        "onCommand:extension.c4earth_reset",
         "workspaceContains:.earth_dev.json",
         "onDebug:c4earthjs-debug"
     ],
@@ -48,6 +50,14 @@
             {
             "command": "extension.c4earth_findserver",
             "title": "C4Earth:搜索本地网络上的C4EARTH服务器"
+            },
+            {
+            "command": "extension.c4earth_abort",
+            "title": "C4Earth:终止C4EARTH服务器脚本执行"
+            },
+            {
+            "command": "extension.c4earth_reset",
+            "title": "C4Earth:复位C4EARTH服务器场景"
             }],
         "configuration": {
             "type": "object",

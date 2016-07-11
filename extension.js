@@ -37,6 +37,12 @@ function activate(context) {
 
     disposable = vscode.commands.registerCommand('extension.c4earth_findserver', socket_debugger.findserver);
     context.subscriptions.push(disposable);
+
+    disposable = vscode.commands.registerCommand('extension.c4earth_abort', socket_debugger.abort);
+    context.subscriptions.push(disposable);
+
+    disposable = vscode.commands.registerCommand('extension.c4earth_reset', socket_debugger.reset);
+    context.subscriptions.push(disposable);
 }
 exports.activate = activate;
 

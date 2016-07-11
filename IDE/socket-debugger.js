@@ -11,7 +11,7 @@ var _connected_do = null;
 
 
 function postDataToServer(data_send){
-
+/*
     _socket.once("data", function(data){
         
         var data_str = data.toString("utf-8").replace("\0",""); 
@@ -34,7 +34,7 @@ function postDataToServer(data_send){
         }
 
     })
-    
+    */
     _socket.write(data_send);
 
 }
@@ -85,7 +85,7 @@ function connectServer(host, port, password){
     {
         vscode.window.showInputBox({"prompt":"密码尚未进行配置，需要输入登录密码。", "password":true, "placeHolder":"请输入登录密码..."}).then(
             function(params) {
-                connectServer_2(host, port, params);
+                connectServer_2(host, port, "md5("+params+")");
             }
         )
     }
@@ -152,6 +152,27 @@ function connectServer_2(host, port, password){
             var ret = JSON.parse(data_str);
             if(ret && ret.success)
             {
+                _socket.on("data", function(dat_ret){
+                    //console.log("远程执行结果: "+dat_ret.toString("utf-8").replace("\0",""));
+                    var data_str = dat_ret.toString("utf-8").replace("\0",""); 
+                    var ret;
+                    
+                    try{ 
+                        ret = JSON.parse(data_str);
+                    }
+                    catch(ex){ ret = {"error":"无法解析的返回结果："+data_str}; }
+
+                    if(ret && ret.success)
+                    {
+                        vscode.window.showInformationMessage("脚本执行成功!");
+                        console.log("脚本执行结果：\n"+ret.result);
+                    }
+                    else
+                    {
+                        vscode.window.showErrorMessage("脚本执行失败!");
+                        console.error("脚本执行失败：\n" + ret.error);
+                    }
+                });
                 vscode.window.setStatusBarMessage("SOCKET已连接到 "+_socket.remoteAddress.toString()+":"+_socket.remotePort);
                 vscode.window.showInformationMessage("验证登录成功!"); 
                 if(_connected_do=="call"){
@@ -159,6 +180,12 @@ function connectServer_2(host, port, password){
                 }
                 else if(_connected_do=="run"){
                     exports.run();
+                }
+                else if(_connected_do=="abort"){
+                    exports.abort();
+                }
+                else if(_connected_do=="reset"){
+                    exports.reset();
                 }
             }
             else
@@ -225,6 +252,7 @@ exports.call = function(){
 exports.run = function(){
     if(!_socket.writable)
     {
+        _connected_do = null;
         vscode.window.showInformationMessage("尚未连接到远程服务器，是否现在进行连接?","否", "是").then(function(params) {
            if(params=="是"){
                _connected_do = "run";
@@ -304,5 +332,39 @@ exports.findserver = function(){
         vscode.window.showWarningMessage("在当前网络上未能找到任何C4ISR EARTH服务器。");
     }, 60000);
 
+}
+
+exports.abort = function(){
+    if(!_socket.writable)
+    {
+        _connected_do = null;
+        vscode.window.showInformationMessage("尚未连接到远程服务器，是否现在进行连接?","否", "是").then(function(params) {
+           if(params=="是"){
+               _connected_do = "abort";
+               connectServer();
+           }
+        });
+        return;
+    }
+
+    var send_str = '{"call":504}';
+    postDataToServer(new Buffer(send_str+"\0","utf8"));
+}
+
+exports.reset = function(){
+    if(!_socket.writable)
+    {
+        _connected_do = null;
+        vscode.window.showInformationMessage("尚未连接到远程服务器，是否现在进行连接?","否", "是").then(function(params) {
+           if(params=="是"){
+               _connected_do = "reset";
+               connectServer();
+           }
+        });
+        return;
+    }
+
+    var send_str = '{"call":599}';
+    postDataToServer(new Buffer(send_str+"\0","utf8"));
 }
 

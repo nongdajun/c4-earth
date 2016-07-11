@@ -41,7 +41,7 @@ function initWorkspaceFun(force){
 
     if(!fs.exists(vscode.workspace.rootPath + "/.earth_dev.json") || force)
     {
-        fs.writeFileSync(vscode.workspace.rootPath + "/.earth_dev.json",'{\n    "ext-version":"' + vscode.extensions.getExtension("NDJ.c4isr-earth-js").packageJSON.version + '"\n}');
+        fs.writeFileSync(vscode.workspace.rootPath + "/.earth_dev.json",'{\n    "ext-version":"' + vscode.extensions.getExtension("NDJ.c4earthjs").packageJSON.version + '"\n}');
     }
 
     vscode.window.showInformationMessage("已成功初始化工作空间!");
