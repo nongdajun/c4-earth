@@ -159,6 +159,11 @@ declare namespace earth{
         function playSound(filename:string):void;
         function writeLogMessage(message:string):void;
         function clearLogMessage():void;
+
+        function makeExplosionEffect(posX:number, posY:number, posZ?:number, windX?:number, windY?:number, windZ?:number, scale?:number, intensity?:number, sound?:boolean);
+		function makeExplosionEffect(vec3:{x:number;y:number;z?:number}, windX?:number, windY?:number, windZ?:number, scale?:number, intensity?:number, sound?:boolean);
+		function makeExplosionEffectOnMarker(obj:marker, windX?:number, windY?:number, windZ?:number, scale?:number, intensity?:number, sound?:boolean);
+
     }
 
     //UI
