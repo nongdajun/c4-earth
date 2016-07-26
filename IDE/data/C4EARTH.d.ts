@@ -2,19 +2,19 @@
 //CLASSES DEFINITION
 //--------------------------------------------
 
-declare class qobject {}
-declare class viewpoint{x:number; y:number; z:number; h:number; p:number; r:number}
-declare class vec3d{x:number; y:number; z:number}
+declare class QObject {}
+declare class Viewpoint{x:number; y:number; z:number; h:number; p:number; r:number}
+declare class Vec3d{x:number; y:number; z:number}
 
 //TIMER
-declare class timer{
+declare class Timer{
     start():void;
     start(timeout:number):void;
     dispose(force?:boolean):void;
 }
 
 //TIMELINE
-declare class timeline{
+declare class Timeline{
     reset():void;
     play(startTime?:number, multiple?:number):void;
     push(handler:any, duration:number):void;
@@ -25,7 +25,7 @@ declare class timeline{
 }
 
 //MARKER
-declare class marker{
+declare class Marker{
     setText(text:string):void;
 	getText():string;
 
@@ -47,15 +47,22 @@ declare class marker{
 
 	setState(state:string):void;
 	getState():string;
+
+	setColor(color:string):void;
+	getColor():string;
 	
 	initTracks():void;
 	removeTracks():void;
-	getMoveTrack():track;
-	getPlanTrack():track;
+	getMoveTrack():Track;
+	getPlanTrack():Track;
+
+    moveByTrack(track:Track, duration:number):boolean;
+	moveByTrack(duration:number):boolean;
+	cancelMoveByTrack():void;
 }
 
 //TRACK
-declare class track{
+declare class Track{
     push(x:number, y:number):void;
 	push(x:number, y:number, z:number):void;
 	push(vec3:{x:number;y:number;z?:number}):void;
@@ -96,21 +103,21 @@ declare namespace earth{
     function alert(message?:any):void;
     function confirm(message?:any):boolean;
 
-    function setTimeout(handler:any, timeout:number):timer;	 
-    function clearTimeout(handle:timer);	 
-    function setInterval(handler:any, timeout:number):timer;	 
-    function clearInterval(handle:timer);	
-    function setTimeline():timeline;	 
-    function clearTimeline(handle:timeline);	
+    function setTimeout(handler:any, timeout:number):Timer;	 
+    function clearTimeout(handle:Timer);	 
+    function setInterval(handler:any, timeout:number):Timer;	 
+    function clearInterval(handle:Timer);	
+    function setTimeline():Timeline;	 
+    function clearTimeline(handle:Timeline);	
 
-    function createObject(classname:string):qobject;
+    function createObject(classname:string):QObject;
 
     function abort(result?:any):void;
     function reset(result?:any):void;
 
     function sleep(msec:number):void;
 
-    function require(module:string):qobject;
+    function require(module:string):QObject;
 
     var version:string;
     var displayScriptErrors:boolean;
@@ -128,15 +135,15 @@ declare namespace earth{
 
     //SENSE
     namespace sense{
-        function createMarker(typeid:string, text:string, x:number, y:number, z:number): marker;
-        function removeMarker(handle:marker):boolean;
-        function existsMarker(handle:marker):boolean;
-        function createTrack(color:string, clamp:boolean, solid:boolean):track;
-        function removeTrack(handle:track):boolean;
-        function existsTrack(handle:track):boolean;            
-        function getAllMarkers(typeid?:string):Array<marker>;
+        function createMarker(typeid:string, text:string, x:number, y:number, z:number): Marker;
+        function removeMarker(handle:Marker):boolean;
+        function existsMarker(handle:Marker):boolean;
+        function createTrack(color:string, clamp:boolean, solid:boolean):Track;
+        function removeTrack(handle:Track):boolean;
+        function existsTrack(handle:Track):boolean;            
+        function getAllMarkers(typeid?:string):Array<Marker>;
         function clearMarkers():void;
-        function getAllTracks():Array<track>;
+        function getAllTracks():Array<Track>;
         function clearTracks():void;
 
         var lighting:boolean;
@@ -162,7 +169,7 @@ declare namespace earth{
 
         function makeExplosionEffect(posX:number, posY:number, posZ?:number, windX?:number, windY?:number, windZ?:number, scale?:number, intensity?:number, sound?:boolean);
 		function makeExplosionEffect(vec3:{x:number;y:number;z?:number}, windX?:number, windY?:number, windZ?:number, scale?:number, intensity?:number, sound?:boolean);
-		function makeExplosionEffectOnMarker(obj:marker, windX?:number, windY?:number, windZ?:number, scale?:number, intensity?:number, sound?:boolean);
+		function makeExplosionEffectOnMarker(obj:Marker, windX?:number, windY?:number, windZ?:number, scale?:number, intensity?:number, sound?:boolean);
 
     }
 
@@ -188,19 +195,19 @@ declare namespace earth{
     //VIEW
     namespace view{
 
-        function setHomeViewpoint(vp:viewpoint):void;	
+        function setHomeViewpoint(vp:Viewpoint):void;	
 	    function setHomeViewpoint(x:number, y:number, z:number):void;
 	    function setHomeViewpoint(x:number, y:number, z:number, h:number, p:number, r:number):void;	
-	    function getHomeViewpoint():viewpoint;	
+	    function getHomeViewpoint():Viewpoint;	
 	    function goHomeViewpoint(duration?:number):void;
 
-        function setViewpoint(vp:viewpoint, duration?:number):void;
+        function setViewpoint(vp:Viewpoint, duration?:number):void;
         function setViewpoint(x:number, y:number, z:number, duration?:number):void;	
         function setViewpoint(x:number, y:number, z:number, h:number, p:number, r:number, duration?:number):void;	
-        function setViewpointByMarker(handle:marker, duration?:number):void;
-		function getViewpoint():viewpoint;
+        function setViewpointByMarker(handle:Marker, duration?:number):void;
+		function getViewpoint():Viewpoint;
 
-        function tetherMarker(handle:marker, duration?:number):void;
+        function tetherMarker(handle:Marker, duration?:number):void;
 
         function zoom(dx:number, dy:number):void;
         function rotate(dx:number, dy:number):void;
