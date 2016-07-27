@@ -56,8 +56,8 @@ declare class Marker{
 	getMoveTrack():Track;
 	getPlanTrack():Track;
 
-    moveByTrack(track:Track, duration:number):boolean;
-	moveByTrack(duration:number):boolean;
+    moveByTrack(track:Track, duration:number, loop?:number):boolean;
+	moveByTrack(duration:number, loop?:number):boolean;
 	cancelMoveByTrack():void;
 }
 
@@ -91,6 +91,8 @@ declare class Track{
 	clear():boolean;
 
 	update(force?:boolean):void;
+
+    distance():number;
 }
 
 
